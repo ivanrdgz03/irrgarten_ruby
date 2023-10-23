@@ -10,16 +10,18 @@ class Player
     @intelligence = intelligence
     @strength = strength
     @health = @@INITIAL_HEALTH
-    @consecutive_hits = 0
-    @row
-    @col
-    @weapons
-    @shields
+    @consecutive_hits  = 0
+    @weapons  = Array.new
+    @shields = Array.new
   end
 
   def resurrect
-
+    @health = @@INITIAL_HEALTH
+    self.reset_hits
+    @weapons.clear
+    @shields.clear
   end
+
   attr_reader :row, :col, :number
 
   def set_pos(row, col)
@@ -32,7 +34,7 @@ class Player
   end
 
   def move(direction, valid_moves)
-
+    #No P2
   end
 
   def attack
@@ -40,50 +42,66 @@ class Player
   end
 
   def defend(received_attack)
-    self.manage_hit(received_attack0)
+    self.manage_hit(received_attack)
   end
 
   def receive_reward
-
+    #No P2
   end
 
   def to_s
-
+    "P[#{@name}, #{@intelligence}, #{@strength}, #{@health}, #{@row}, #{@col}, #{@consecutive_hits}, #{@weapons}, #{@shields}]"
   end
 
-  def receive_weapon(w)
-
+  private def receive_weapon(w)
+    #No P2
   end
 
-  def receive_shield(s)
-
+  private def receive_shield(s)
+    #No P2
   end
 
-  def new_weapon
-
+  private def new_weapon
+    if @weapons.size < @@MAX_WEAPONS
+      weapon = Weapon.new(Dice.weapon_power, Dice.uses_left)
+      @weapons.push(weapon)
+      weapon
+    end
   end
 
-  def new_shield
-
+  private def new_shield
+    if @shields.size < @@MAX_SHIELDS
+      shield = Shield.new(Dice.shield_power, Dice.uses_left)
+      @shields.push(shield)
+      shield
+    end
   end
 
-  def sum_weapons
-
+  private def sum_weapons
+    suma = 0.0
+    for weapon in @weapons
+      suma = suma + weapon.attack
+    end
+    suma
   end
 
-  def sum_shields
-
+  private def sum_shields
+    suma = 0.0
+    for shield in @shields
+      suma = suma + shield.protect
+    end
+    suma
   end
 
-  def defensive_energy
+  private def defensive_energy
     @intelligence + self.sum_shields
   end
 
-  def manage_hit(received_attack)
-
+  private def manage_hit(received_attack)
+    #No P2
   end
 
-  def reset_hits
+  private def reset_hits
     @consecutive_hits = 0
   end
 
@@ -94,5 +112,4 @@ class Player
   private def inc_consecutive_hits
     @consecutive_hits -= 1
   end
-
 end

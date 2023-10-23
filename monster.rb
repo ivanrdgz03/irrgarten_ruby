@@ -19,7 +19,7 @@ class Monster
   end
 
   def defend(received_attack)
-
+    #No P2
   end
 
   def set_pos(row, col)
@@ -28,7 +28,7 @@ class Monster
   end
 
   def to_s
-
+    "M[#{@name}, #{@intelligence}, #{@stregth}, #{@health}, #{@row}, #{@col}]"
   end
   private def got_wounded
     @health -= 1

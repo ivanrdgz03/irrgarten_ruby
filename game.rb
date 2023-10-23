@@ -2,16 +2,15 @@ class Game
   @@MAX_ROUNDS = 10
 
   def initialize(nplayers)
-    @current_player_index
-    @log
-    @labyrinth
-    @current_player
-    @players[nplayers]
+    @current_player_index = Dice.who_starts(nplayers)
+    @log = ''
+    @labyrinth = Labyrinth.new(3,3,2,3)
+    @current_player =
     @monsters
   end
 
   def finished
-    labyrinth.have_a_winner
+    @labyrinth.have_a_winner
   end
 
   def next_step(preferred_direction)
