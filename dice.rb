@@ -49,11 +49,11 @@ class Dice
   end
 
   def self.weapon_power
-    @generator.rand(0.0...@@MAX_ATTACK)
+    @generator.rand(0...@@MAX_ATTACK)
   end
 
   def self.shield_power
-    @generator.rand(0.0...@@MAX_SHIELD)
+    @generator.rand(0...@@MAX_SHIELD)
   end
 
   def self.uses_left

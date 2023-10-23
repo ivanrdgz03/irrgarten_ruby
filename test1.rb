@@ -42,6 +42,6 @@ class Test1
     }
 
 
-    puts (salida/n_ensayos)
+    puts(salida/n_ensayos)
   end
   end

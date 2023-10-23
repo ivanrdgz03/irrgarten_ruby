@@ -39,7 +39,7 @@ class Labyrinth
   end
 
   def add_monster(row, col, monster)
-    if(self.pos_ok(row,col) && self.empty_pos(row,col))
+    if self.pos_ok(row,col) && self.empty_pos(row,col)
       monster.set_pos(row,col)
       @labyrinth[row][col] = @@MONSTER_CHAR
       @monsters[row][col] = monster
@@ -59,7 +59,7 @@ class Labyrinth
   end
 
   private def pos_ok(row, col)
-    row>=@@ROW && row<@nRows && col<@nCols && col>=@@COL
+    row>=@@ROW && row<@n_rows && col<@n_cols && col>=@@COL
   end
 
   private def empty_pos(row, col)
@@ -91,7 +91,6 @@ class Labyrinth
   end
 
   private def dir_2_pos(row, col, direction)
-    salida = Array.new(2)
     case direction
     when UP
       row+=1
@@ -101,6 +100,8 @@ class Labyrinth
       col+=1
     when LEFT
       col-=1
+    else
+      puts("Se introdujo una dirección invalida")
     end
 
     [row,col]
@@ -114,7 +115,7 @@ class Labyrinth
     [row,col]
   end
 
-  private def put_player_2D(old_row, old_col, row, col, player)
+  private def put_player_2d(old_row, old_col, row, col, player)
     #No P2
   end
 end

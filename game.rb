@@ -52,30 +52,30 @@ class Game
   end
 
   private def log_player_won
-    @log += "The player has won\n"
+    @log += "The player #{@current_player.number} has won the match\n"
   end
 
   private def log_monster_won
-    @log += "The monster has won\n"
+    @log += "The monster has won the combat\n";
   end
 
   private def log_resurrected
-    @log += "The player has resurrected\n"
+    @log += "The player #{@current_player.number} has resurrected\n"
   end
 
   private def log_player_skip_turn
-    @log += "The player skip his turn\n"
+    @log += "The player #{@current_player.number} has lost his turn because is dead\n"
   end
 
   private def log_player_no_orders
-    @log += "It was impossible do the mouvements\n"
+    @log += "The player #{@current_player.number} has not followed the instructions of the human player (not possible)\n"
   end
 
   private def log_no_monster
-    @log += "The player has mouved to a empty square\n"
+    @log += "The player #{@current_player.number} has moved to an empty cell or has been unable to move\n"
   end
 
   private def log_rounds(rounds, max)
-    @log += "#{rounds} of #{max} rounds of combat have occurred\n";
+    @log += "#{rounds} of #{max} combat rounds have occurred\n";
   end
 end
