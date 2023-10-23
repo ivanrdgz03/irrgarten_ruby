@@ -79,7 +79,7 @@ class Player
 
   private def sum_weapons
     suma = 0.0
-    for weapon in @weapons
+    @weapons.each do |weapon|
       suma = suma + weapon.attack
     end
     suma
@@ -87,7 +87,7 @@ class Player
 
   private def sum_shields
     suma = 0.0
-    for shield in @shields
+    @shields.each do |shield|
       suma = suma + shield.protect
     end
     suma
