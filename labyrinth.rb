@@ -90,17 +90,17 @@ class Labyrinth
 
   def valid_moves(row, col)
     output = Array.new
-    if self.can_step_on(row+1,col)
-      output.push(Directions::DOWN)
+    if self.can_step_on(row + 1,col)
+      output.push(Irrgarten::Directions::DOWN)
     end
     if self.can_step_on(row-1,col)
-      output.push(Directions::UP)
+      output.push(Irrgarten::Directions::UP)
     end
     if self.can_step_on(row,col+1)
-      output.push(Directions::RIGHT)
+      output.push(Irrgarten::Directions::RIGHT)
     end
     if self.can_step_on(row, col-1)
-      output.push(Directions::LEFT)
+      output.push(Irrgarten::Directions::LEFT)
     end
 
     output
@@ -139,13 +139,13 @@ class Labyrinth
 
   private def dir_2_pos(row, col, direction)
     case direction
-    when UP
+    when Irrgarten::Directions::UP
       row+=1
-    when DOWN
+    when Irrgarten::Directions::DOWN
       row-=1
-    when RIGHT
+    when Irrgarten::Directions::RIGHT
       col+=1
-    when LEFT
+    when Irrgarten::Directions::LEFT
       col-=1
     else
       puts("Se introdujo una dirección invalida")
@@ -163,7 +163,7 @@ class Labyrinth
   end
 
   private def put_player_2d(old_row, old_col, row, col, player)
-    output = null
+    output = nil
     if self.can_step_on(row, col)
       if self.pos_ok(old_row, old_col)
         p = @players[old_row][old_col]

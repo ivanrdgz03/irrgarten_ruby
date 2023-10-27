@@ -13,6 +13,8 @@ class Player
     @consecutive_hits  = 0
     @weapons  = Array.new
     @shields = Array.new
+    @row = -1
+    @col = -1
   end
 
   def resurrect
@@ -35,10 +37,9 @@ class Player
 
   def move(direction, valid_moves)
     size = valid_moves.size
-    output;
     contained = valid_moves.include?direction
     if size > 0 && !contained
-      Directions first_element = valid_moves[0]
+      first_element = valid_moves[0]
       output = first_element
     else
       output = direction

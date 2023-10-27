@@ -6,7 +6,7 @@ class Game
   @@MAX_ROUNDS = 10
 
   def initialize(nplayers)
-    @players = Array.new
+    @players = []
     i = 0
     while i != nplayers
       @players[i] = Player.new(i, Dice.random_intelligence, Dice.random_strength)
@@ -32,7 +32,7 @@ class Game
         self.log_player_no_orders
       end
       monster = @labyrinth.put_player(direction, @current_player)
-      if monster == null
+      if monster == nil
         self.log_no_monster
       else
         winner = self.combat(monster)
@@ -65,6 +65,7 @@ class Game
   end
 
   private def actual_direction(preferred_direction)
+    if @current_player != nil
     current_row = @current_player.row
     current_col = @current_player.col
     valid_moves = @labyrinth.valid_moves(current_row,current_col)
@@ -72,6 +73,7 @@ class Game
     output = @current_player.move(preferred_direction, valid_moves)
 
     output
+    end
   end
 
   private def combat(monster)
