@@ -1,3 +1,4 @@
+require_relative 'game'
 module Control
 
   class Controller
@@ -8,7 +9,7 @@ module Control
 
     def play
       end_of_game = false
-      while (!end_of_game)
+      while !end_of_game
         @view.show_game(@game.game_state) 
         direction = @view.next_move 
         end_of_game = @game.next_step(direction)

@@ -1,16 +1,22 @@
+require_relative 'player'
+require_relative 'dice'
+require_relative 'labyrinth'
+require_relative 'game_state'
 class Game
   @@MAX_ROUNDS = 10
 
   def initialize(nplayers)
     @players = Array.new
-    nplayers.each do |i|
+    i = 0
+    while i != nplayers
       @players[i] = Player.new(i, Dice.random_intelligence, Dice.random_strength)
+      i+=1
     end
 
     @current_player_index = Dice.who_starts(nplayers)
     @log = ''
     @labyrinth = Labyrinth.new(3,3,2,3)
-    @current_player = @players[@current_player]
+    @current_player = @players[@current_player_index]
     @monsters = Array.new
   end
 
@@ -43,7 +49,7 @@ class Game
     end_game
   end
 
-  def get_game_state
+  def game_state
     Game_state.new(@labyrinth.to_s, @players.to_s, @monsters.to_s, @current_player_index, self.finished, @log)
   end
 
@@ -76,7 +82,7 @@ class Game
 
     while !lose && rounds < @@MAX_ROUNDS
       winner = Game_character::MONSTER
-      ++rounds
+      rounds += 1
       monster_attack = monster.attack
       lose = @current_player.defend(monster_attack)
       if !lose

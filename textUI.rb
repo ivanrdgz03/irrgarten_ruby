@@ -56,7 +56,7 @@ module UI
     end
 
     def show_game(game_state)
-
+      puts(game_state.to_s)
     end
 
   end # class   

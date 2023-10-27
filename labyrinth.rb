@@ -15,9 +15,9 @@ class Labyrinth
     @monsters = Array.new(n_rows) { Array.new(n_cols) }
     @players = Array.new(n_rows) { Array.new(n_cols) }
     @labyrinth = Array.new(n_rows) { Array.new(n_cols) }
-    @labyrinth.each do |row|
-      row.each do |elemento|
-        elemento = @@EMPTY_CHAR
+    for i in 0...n_rows
+      for j in 0...n_cols
+        @labyrinth[i][j] = @@EMPTY_CHAR
       end
     end
     @labyrinth[exit_row][exit_col] = @@EXIT_CHAR
@@ -35,10 +35,12 @@ class Labyrinth
   def have_a_winner
     salida = false
 
-    @players.each do |fila|
-      fila.each do |player|
-        if player.row == @exit_row && player.col == @exit_col
-          salida =true
+    for i in 0...@n_rows
+      for j in 0...@n_cols
+        if @players[i][j] != nil
+          if @players[i][j].row == @exit_row && @players[i][j].col == @exit_col
+            salida =true
+          end
         end
       end
     end
