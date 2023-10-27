@@ -2,10 +2,10 @@ class Player
   @@MAX_WEAPONS = 2
   @@MAX_SHIELDS = 3
   @@INITIAL_HEALTH = 10
-  @HITS2LOSE = 3
+  @@HITS2LOSE = 3
 
   def initialize(number, intelligence, strength)
-    @name = "Player##{number}"
+    @name = "Player ##{number}"
     @number = number
     @intelligence = intelligence
     @strength = strength
@@ -34,7 +34,16 @@ class Player
   end
 
   def move(direction, valid_moves)
-    #No P2
+    size = valid_moves.size
+    output;
+    contained = valid_moves.include?direction
+    if size > 0 && !contained
+      Directions first_element = valid_moves[0]
+      output = first_element
+    else
+      output = direction
+    end
+    output
   end
 
   def attack
@@ -46,7 +55,20 @@ class Player
   end
 
   def receive_reward
-    #No P2
+    w_reward = Dice.weapons_reward
+    s_reward = Dice.shields_reward
+    while w_reward > 0
+      wnew = self.new_weapon
+      self.receive_weapon(wnew)
+      --w_reward
+    end
+    while s_reward > 0
+      snew = self.new_shield
+      self.receive_shield(snew)
+      --s_reward
+    end
+    extra_health = Dice.health_reward
+    @health += extra_health
   end
 
   def to_s
@@ -54,11 +76,29 @@ class Player
   end
 
   private def receive_weapon(w)
-    #No P2
+    @weapons.each do |wi|
+      discard = wi.discard
+      if discard
+        @weapons.remove(wi)
+      end
+    end
+    size = @weapons.size
+    if size < @@MAX_WEAPONS
+      @weapons.push(w)
+    end
   end
 
   private def receive_shield(s)
-    #No P2
+    @shields.each do |si|
+      discard = si.discard
+      if discard
+        @shields.remove(si)
+      end
+    end
+    size = @shields.size
+    if size < @@MAX_SHIELDS
+      @shields.push(s)
+    end
   end
 
   private def new_weapon
@@ -98,7 +138,21 @@ class Player
   end
 
   private def manage_hit(received_attack)
-    #No P2
+    defense = self.defensive_energy
+    if defense < received_attack
+      self.got_wounded
+      self.inc_consecutive_hits
+    else
+      self.reset_hits
+    end
+
+      if @consecutive_hits == @@HITS2LOSE || self.dead
+        self.reset_hits
+        lose = true
+      else
+        lose  = false
+      end
+    lose
   end
 
   private def reset_hits

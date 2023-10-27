@@ -15,10 +15,21 @@ class Labyrinth
     @monsters = Array.new(n_rows) { Array.new(n_cols) }
     @players = Array.new(n_rows) { Array.new(n_cols) }
     @labyrinth = Array.new(n_rows) { Array.new(n_cols) }
+    @labyrinth.each do |row|
+      row.each do |elemento|
+        elemento = @@EMPTY_CHAR
+      end
+    end
+    @labyrinth[exit_row][exit_col] = @@EXIT_CHAR
   end
 
   def spread_players(players)
-    #No P2
+    old_row = -1
+    old_col = -1
+    players.each do |p|
+      pos = self.random_empty_pos
+      self.put_player_2d(old_row, old_col, pos[0], pos[1], p)
+    end
   end
 
   def have_a_winner
@@ -47,17 +58,51 @@ class Labyrinth
   end
 
   def put_player(direction, player)
-    #No P2
+    old_row = player.row
+    old_col = player.col
+
+    new_pos = self.dir_2_pos(old_row, old_col, direction)
+    monster = self.put_player_2d(old_row, old_col, new_pos[0], new_pos[1], player)
+
+    monster
   end
 
   def add_block(orientation, start_row, start_col, length)
-    #No P2
+    if orientation == Orientation::VERTICAL
+      inc_row = 1
+      inc_col = 0
+    else
+      inc_row = 0
+      inc_col = 1
+    end
+
+    row = start_row
+    col = start_col
+    while self.pos_ok(row,col) && self.empty_pos(row,col) && length > 0
+      @labyrinth[row][col] = @@BLOCK_CHAR
+      --length
+      row += inc_row
+      col += inc_col
+    end
   end
 
   def valid_moves(row, col)
-    #No P2
-  end
+    output = Array.new
+    if self.can_step_on(row+1,col)
+      output.push(Directions::DOWN)
+    end
+    if self.can_step_on(row-1,col)
+      output.push(Directions::UP)
+    end
+    if self.can_step_on(row,col+1)
+      output.push(Directions::RIGHT)
+    end
+    if self.can_step_on(row, col-1)
+      output.push(Directions::LEFT)
+    end
 
+    output
+  end
   private def pos_ok(row, col)
     row>=@@ROW && row<@n_rows && col<@n_cols && col>=@@COL
   end
@@ -116,6 +161,27 @@ class Labyrinth
   end
 
   private def put_player_2d(old_row, old_col, row, col, player)
-    #No P2
+    output = null
+    if self.can_step_on(row, col)
+      if self.pos_ok(old_row, old_col)
+        p = @players[old_row][old_col]
+        if p == player
+          self.update_old_pos(old_row, old_col)
+          @players[old_row][old_col] = null
+        end
+      end
+    end
+    monster_pos = self.monster_pos(row,col)
+    if monster_pos
+      @labyrinth[row][col] = @@COMBAT_CHAR
+      output = @monsters[row][col]
+    else
+      number = player.number
+      @labyrinth[row][col] = number
+    end
+    @players[row][col] = player
+    player.set_pos(row,col)
+
+    output
   end
 end
