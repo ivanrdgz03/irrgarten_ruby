@@ -19,7 +19,15 @@ class Monster
   end
 
   def defend(received_attack)
-    #No P2
+    is_dead = self.dead
+    if !is_dead
+      defensive_energy = Dice.intensity(@intelligence)
+      if defensive_energy < received_attack
+        self.got_wounded
+        is_dead = self.dead
+      end
+    end
+    is_dead
   end
 
   def set_pos(row, col)
