@@ -26,13 +26,13 @@ module UI
       print "Where? "
       got_input = false
       while (!got_input)
-        c = read_char
+        c = "a"#read_char
         case c
           when "\e[A"
             puts "UP ARROW"
             output = Irrgarten::Directions::UP
             got_input = true
-          when "\e[B"
+          when "a"#"\e[B"
             puts "DOWN ARROW"
             output = Irrgarten::Directions::DOWN
             got_input = true

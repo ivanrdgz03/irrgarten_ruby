@@ -13,8 +13,8 @@ class Player
     @consecutive_hits  = 0
     @weapons  = Array.new
     @shields = Array.new
-    @row = -1
-    @col = -1
+    @row
+    @col
   end
 
   def resurrect

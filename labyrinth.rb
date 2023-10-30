@@ -20,7 +20,7 @@ class Labyrinth
         @labyrinth[i][j] = @@EMPTY_CHAR
       end
     end
-    @labyrinth[exit_row][exit_col] = @@EXIT_CHAR
+    @labyrinth[exit_row-1][exit_col-1] = @@EXIT_CHAR
   end
 
   def spread_players(players)
@@ -65,8 +65,6 @@ class Labyrinth
 
     new_pos = self.dir_2_pos(old_row, old_col, direction)
     monster = self.put_player_2d(old_row, old_col, new_pos[0], new_pos[1], player)
-
-    monster
   end
 
   def add_block(orientation, start_row, start_col, length)
@@ -140,9 +138,9 @@ class Labyrinth
   private def dir_2_pos(row, col, direction)
     case direction
     when Irrgarten::Directions::UP
-      row+=1
-    when Irrgarten::Directions::DOWN
       row-=1
+    when Irrgarten::Directions::DOWN
+      row+=1
     when Irrgarten::Directions::RIGHT
       col+=1
     when Irrgarten::Directions::LEFT
@@ -169,7 +167,7 @@ class Labyrinth
         p = @players[old_row][old_col]
         if p == player
           self.update_old_pos(old_row, old_col)
-          @players[old_row][old_col] = null
+          @players[old_row][old_col] = nil
         end
       end
     end

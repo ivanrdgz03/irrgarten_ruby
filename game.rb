@@ -10,12 +10,13 @@ class Game
     i = 0
     while i != nplayers
       @players[i] = Player.new(i, Dice.random_intelligence, Dice.random_strength)
+      @players[i].set_pos(0,0)
       i+=1
     end
 
     @current_player_index = Dice.who_starts(nplayers)
     @log = ''
-    @labyrinth = Labyrinth.new(3,3,2,3)
+    @labyrinth = Labyrinth.new(3,3,3,3)
     @current_player = @players[@current_player_index]
     @monsters = Array.new
   end
@@ -66,13 +67,13 @@ class Game
 
   private def actual_direction(preferred_direction)
     if @current_player != nil
-    current_row = @current_player.row
-    current_col = @current_player.col
-    valid_moves = @labyrinth.valid_moves(current_row,current_col)
+      current_row = @current_player.row
+      current_col = @current_player.col
+      valid_moves = @labyrinth.valid_moves(current_row,current_col)
 
-    output = @current_player.move(preferred_direction, valid_moves)
+      output = @current_player.move(preferred_direction, valid_moves)
 
-    output
+      output
     end
   end
 
