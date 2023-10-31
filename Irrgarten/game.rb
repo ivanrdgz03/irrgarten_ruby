@@ -20,7 +20,7 @@ module Irrgarten
 
       @current_player_index = Dice.who_starts(nplayers)
       @log = ''
-      @labyrinth = Labyrinth.new(3,3,3,3)
+      @labyrinth = Labyrinth.new(3,3,2,2)
       @current_player = @players[@current_player_index]
       @monsters = Array.new
       configure_labyrinth
