@@ -10,7 +10,7 @@ module Irrgarten
     @@MAX_ROUNDS = 10
 
     def initialize(nplayers)
-      @players = []
+      @players = Array.new(nplayers)
       i = 0
       while i != nplayers
         @players[i] = Player.new(i, Dice.random_intelligence, Dice.random_strength)
