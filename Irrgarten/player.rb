@@ -2,6 +2,7 @@ module Irrgarten
   require_relative 'dice'
   require_relative 'weapon'
   require_relative 'shield'
+  #noinspection RubyTooManyInstanceVariablesInspection
   class Player
     @@MAX_WEAPONS = 2
     @@MAX_SHIELDS = 3

@@ -77,8 +77,6 @@ module Irrgarten
         valid_moves = @labyrinth.valid_moves(current_row,current_col)
 
         output = @current_player.move(preferred_direction, valid_moves)
-
-        output
       end
     end
 

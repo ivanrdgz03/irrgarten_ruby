@@ -23,7 +23,7 @@ module UI
     def next_move
       print "Where? "
       got_input = false
-      while (!got_input)
+      while !got_input
         c = read_char
         case c
           when "\e[A"
