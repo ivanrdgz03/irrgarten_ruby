@@ -1,8 +1,6 @@
 require 'io/console'
-require_relative 'directions'
-
 module UI
-
+  require_relative '../Irrgarten/directions'
   class TextUI
 
     #https://gist.github.com/acook/4190379
