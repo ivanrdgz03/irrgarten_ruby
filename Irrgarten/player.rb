@@ -112,19 +112,11 @@ module Irrgarten
     end
 
     private def new_weapon
-      if @weapons.size < @@MAX_WEAPONS
         weapon = Weapon.new(Dice.random_strength, Dice.uses_left)
-        @weapons.push(weapon)
-        weapon
-      end
     end
 
     private def new_shield
-      if @shields.size < @@MAX_SHIELDS
         shield = Shield.new(Dice.shield_power, Dice.uses_left)
-        @shields.push(shield)
-        shield
-      end
     end
 
     private def sum_weapons
