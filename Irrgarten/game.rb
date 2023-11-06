@@ -11,7 +11,7 @@ module Irrgarten
     @@MAX_ROUNDS = 10
 
     def initialize(nplayers)
-      if nplayers <= 0
+      if nplayers <= 0 || nplayers >9
         puts("Invalid number of players")
         exit(1)
       end
