@@ -6,10 +6,19 @@ module Irrgarten
   require_relative 'monster'
   require_relative 'game_character'
   require_relative 'directions'
+  require_relative 'orientation'
   class Game
     @@MAX_ROUNDS = 10
 
     def initialize(nplayers)
+      if nplayers <= 0
+        puts("Invalid number of players")
+        exit(1)
+      end
+      n_row = 3
+      n_col = 3
+      exit_row = 2
+      exit_col = 2
       @players = Array.new(nplayers)
       i = 0
       while i != nplayers
@@ -20,7 +29,7 @@ module Irrgarten
 
       @current_player_index = Dice.who_starts(nplayers)
       @log = ''
-      @labyrinth = Labyrinth.new(3,3,2,2)
+      @labyrinth = Labyrinth.new(n_row,n_col,exit_row,exit_col)
       @current_player = @players[@current_player_index]
       @monsters = Array.new
       configure_labyrinth
@@ -60,9 +69,12 @@ module Irrgarten
     end
 
     private def configure_labyrinth
-      monster = Monster.new("name",Dice.random_intelligence, Dice.random_strength)
+      row = 2
+      col = 1
+      monster = Monster.new("1",Dice.random_intelligence, Dice.random_strength)
       @monsters.push(monster)
-      @labyrinth.add_monster(2,1,monster)
+      @labyrinth.add_monster(row, col, monster)
+      @labyrinth.add_block(Orientation::HORIZONTAL, 0, 1, 2)
     end
 
     private def next_player
