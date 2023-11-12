@@ -78,8 +78,10 @@ module Irrgarten
     private def configure_labyrinth
       row = 2
       col = 1
-      monster = Monster.new("1",Dice.random_intelligence, Dice.random_strength)
+      monster = Monster.new("1",1, Dice.random_strength)
       @monsters.push(monster)
+      @monsters.push(monster)
+      @labyrinth.add_monster(row,col-1, monster)
       @labyrinth.add_monster(row, col, monster)
       @labyrinth.add_block(Orientation::HORIZONTAL, 0, 1, 2)
       @labyrinth.spread_players(@players)
@@ -102,7 +104,7 @@ module Irrgarten
 
     private def combat(monster)
       rounds = 0
-      winner = Game_character
+      winner = Game_character::PLAYER
       player_attack = @current_player.attack
       lose = monster.defend(player_attack)
 

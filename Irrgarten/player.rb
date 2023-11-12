@@ -74,6 +74,7 @@ module Irrgarten
         s_reward -= 1
       end
       extra_health = Dice.health_reward
+      puts(extra_health)
       @health += extra_health
     end
 
@@ -91,8 +92,6 @@ module Irrgarten
 
     private def receive_weapon(w)
       i = @weapons.size - 1
-      puts(i)
-      puts(@weapons[i].to_s)
       while i >= 0
         discard = @weapons[i].discard
         if discard
@@ -108,8 +107,6 @@ module Irrgarten
 
     private def receive_shield(s)
       i = @shields.size - 1
-      puts(i)
-      puts(@shields[i].to_s)
       while i >= 0
         discard = @shields[i].discard
         if discard
@@ -134,7 +131,7 @@ module Irrgarten
     private def sum_weapons
       suma = 0.0
       @weapons.each do |weapon|
-        suma = suma + weapon.attack
+        suma += weapon.attack
       end
       suma
     end
@@ -142,7 +139,7 @@ module Irrgarten
     private def sum_shields
       suma = 0.0
       @shields.each do |shield|
-        suma = suma + shield.protect
+        suma += shield.protect
       end
       suma
     end
