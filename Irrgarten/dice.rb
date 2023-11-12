@@ -50,11 +50,11 @@ module Irrgarten
     end
 
     def self.weapon_power
-      @generator.rand(0...@@MAX_ATTACK)
+      @generator.rand(0.0...@@MAX_ATTACK)
     end
 
     def self.shield_power
-      @generator.rand(0...@@MAX_SHIELD)
+      @generator.rand(0.0...@@MAX_SHIELD)
     end
 
     def self.uses_left
@@ -66,7 +66,7 @@ module Irrgarten
     end
 
     def self.discard_element(uses_left)
-      prob = 1.0 - (uses_left / @@MAX_USES)
+      prob = 1.0 - (uses_left.to_f / @@MAX_USES)
 
       @generator.rand < prob
     end

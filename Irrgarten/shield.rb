@@ -9,7 +9,7 @@ module Irrgarten
     def protect
       aux = 0.0
       if @uses > 0
-        --@uses
+        @uses-=1
         aux = @protection
       end
       aux

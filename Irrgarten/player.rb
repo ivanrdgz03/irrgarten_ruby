@@ -91,6 +91,8 @@ module Irrgarten
 
     private def receive_weapon(w)
       i = @weapons.size - 1
+      puts(i)
+      puts(@weapons[i].to_s)
       while i >= 0
         discard = @weapons[i].discard
         if discard
@@ -106,6 +108,8 @@ module Irrgarten
 
     private def receive_shield(s)
       i = @shields.size - 1
+      puts(i)
+      puts(@shields[i].to_s)
       while i >= 0
         discard = @shields[i].discard
         if discard

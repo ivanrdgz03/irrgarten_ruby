@@ -9,7 +9,7 @@ module Irrgarten
     def attack
       aux = 0.0
       if @uses > 0
-        --@uses
+        @uses-=1
         aux = @power
       end
       aux
