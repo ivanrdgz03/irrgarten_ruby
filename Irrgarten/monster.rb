@@ -38,7 +38,7 @@ class Monster
   end
 
   def to_s
-    "M[#{@name}, #{@intelligence}, #{@stregth}, #{@health}, #{@row}, #{@col}]"
+    "M[##{@name}, #{@intelligence}, #{@stregth}, #{@health}, #{@row}, #{@col}]"
   end
   private def got_wounded
     @health -= 1

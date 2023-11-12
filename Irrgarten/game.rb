@@ -23,7 +23,6 @@ module Irrgarten
       i = 0
       while i != nplayers
         @players[i] = Player.new(i, Dice.random_intelligence, Dice.random_strength)
-        @players[i].set_pos(0,0)
         i+=1
       end
 
@@ -65,7 +64,15 @@ module Irrgarten
     end
 
     def game_state
-      Game_state.new(@labyrinth.to_s, @players.to_s, @monsters.to_s, @current_player_index, self.finished, @log)
+      monster_string =""
+      players_string =""
+      @players.each do |player|
+        players_string += player.to_s
+      end
+      @monsters.each do |monster|
+        monster_string += monster.to_s
+      end
+      Game_state.new(@labyrinth.to_s, players_string,monster_string, @current_player_index, self.finished, @log)
     end
 
     private def configure_labyrinth
@@ -75,6 +82,7 @@ module Irrgarten
       @monsters.push(monster)
       @labyrinth.add_monster(row, col, monster)
       @labyrinth.add_block(Orientation::HORIZONTAL, 0, 1, 2)
+      @labyrinth.spread_players(@players)
     end
 
     private def next_player

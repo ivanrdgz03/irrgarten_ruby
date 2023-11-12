@@ -2,7 +2,7 @@ module Irrgarten
   require_relative 'dice'
   require_relative 'weapon'
   require_relative 'shield'
-  #noinspection RubyTooManyInstanceVariablesInspection
+  # noinspection RubyTooManyInstanceVariablesInspection
   class Player
     @@MAX_WEAPONS = 2
     @@MAX_SHIELDS = 3
@@ -15,8 +15,8 @@ module Irrgarten
       @intelligence = intelligence
       @strength = strength
       @health = @@INITIAL_HEALTH
-      @consecutive_hits  = 0
-      @weapons  = Array.new
+      @consecutive_hits = 0
+      @weapons = Array.new
       @shields = Array.new
       @row
       @col
@@ -37,12 +37,12 @@ module Irrgarten
     end
 
     def dead
-      @health<=0
+      @health <= 0
     end
 
     def move(direction, valid_moves)
       size = valid_moves.size
-      contained = valid_moves.include?direction
+      contained = valid_moves.include? direction
       if size > 0 && !contained
         first_element = valid_moves[0]
         output = first_element
@@ -78,17 +78,25 @@ module Irrgarten
     end
 
     def to_s
-      "P[#{@name}, #{@intelligence}, #{@strength}, #{@health}, #{@row}, #{@col}, #{@consecutive_hits}, #{@weapons}, #{@shields}]"
+      weapons_string = ""
+      shields_string = ""
+      @weapons.each do |weapon|
+        weapons_string += " " + weapon.to_s
+      end
+      @shields.each do |shield|
+        shields_string += " " + shield.to_s
+      end
+      "P[#{@name}, #{@intelligence}, #{@strength}, #{@health}, #{@row}, #{@col}, #{@consecutive_hits}, #{weapons_string}, #{shields_string}]"
     end
 
     private def receive_weapon(w)
-      @weapons.each do |wi|
-        if wi != nil
-          discard = wi.discard
-          if discard
-            @weapons.delete(wi)
-          end
+      i = @weapons.size - 1
+      while i >= 0
+        discard = @weapons[i].discard
+        if discard
+          @weapons.delete_at(i)
         end
+        i-=1
       end
       size = @weapons.size
       if size < @@MAX_WEAPONS
@@ -97,13 +105,13 @@ module Irrgarten
     end
 
     private def receive_shield(s)
-      @shields.each do |si|
-        if si != nil
-          discard = si.discard
-          if discard
-            @shields.delete(si)
-          end
+      i = @shields.size - 1
+      while i >= 0
+        discard = @shields[i].discard
+        if discard
+          @shields.delete_at(i)
         end
+        i-=1
       end
       size = @shields.size
       if size < @@MAX_SHIELDS
@@ -112,11 +120,11 @@ module Irrgarten
     end
 
     private def new_weapon
-        weapon = Weapon.new(Dice.random_strength, Dice.uses_left)
+      weapon = Weapon.new(Dice.random_strength, Dice.uses_left)
     end
 
     private def new_shield
-        shield = Shield.new(Dice.shield_power, Dice.uses_left)
+      shield = Shield.new(Dice.shield_power, Dice.uses_left)
     end
 
     private def sum_weapons
@@ -148,12 +156,12 @@ module Irrgarten
         self.reset_hits
       end
 
-        if @consecutive_hits == @@HITS2LOSE || self.dead
-          self.reset_hits
-          lose = true
-        else
-          lose  = false
-        end
+      if @consecutive_hits == @@HITS2LOSE || self.dead
+        self.reset_hits
+        lose = true
+      else
+        lose = false
+      end
       lose
     end
 

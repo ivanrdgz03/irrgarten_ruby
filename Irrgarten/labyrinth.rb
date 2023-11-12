@@ -3,6 +3,7 @@ module Irrgarten
   require_relative 'player'
   require_relative 'directions'
   require_relative 'dice'
+
   class Labyrinth
     @@BLOCK_CHAR = 'X'
     @@EMPTY_CHAR = '-'
@@ -20,12 +21,13 @@ module Irrgarten
       @monsters = Array.new(n_rows) { Array.new(n_cols) }
       @players = Array.new(n_rows) { Array.new(n_cols) }
       @labyrinth = Array.new(n_rows) { Array.new(n_cols) }
+      #Inicializacion de @labyrinth a @@EMPTY_CHAR
       (0...n_rows).each do |i|
         (0...n_cols).each do |j|
           @labyrinth[i][j] = @@EMPTY_CHAR
         end
       end
-      @labyrinth[exit_row-1][exit_col-1] = @@EXIT_CHAR
+      @labyrinth[exit_row][exit_col] = @@EXIT_CHAR
     end
 
     def spread_players(players)
@@ -53,12 +55,16 @@ module Irrgarten
     end
 
     def to_s
-      "L[#{@n_rows}, #{@n_cols}, #{@exit_row}, #{@exit_col}]"
+      matrix_string = ""
+      @labyrinth.each do |fila|
+        matrix_string += "\n[" + fila.join(', ') + "]"
+      end
+      "L[#{@n_rows}, #{@n_cols}, #{@exit_row}, #{@exit_col}, #{matrix_string}]"
     end
 
     def add_monster(row, col, monster)
-      if self.pos_ok(row,col) && self.empty_pos(row,col)
-        monster.set_pos(row,col)
+      if self.pos_ok(row, col) && self.empty_pos(row, col)
+        monster.set_pos(row, col)
         @labyrinth[row][col] = @@MONSTER_CHAR
         @monsters[row][col] = monster
       end
@@ -83,7 +89,7 @@ module Irrgarten
 
       row = start_row
       col = start_col
-      while self.pos_ok(row,col) && self.empty_pos(row,col) && length > 0
+      while self.pos_ok(row, col) && self.empty_pos(row, col) && length > 0
         @labyrinth[row][col] = @@BLOCK_CHAR
         length -= 1
         row += inc_row
@@ -93,23 +99,24 @@ module Irrgarten
 
     def valid_moves(row, col)
       output = Array.new
-      if self.can_step_on(row + 1,col)
+      if self.can_step_on(row + 1, col)
         output.push(Irrgarten::Directions::DOWN)
       end
-      if self.can_step_on(row-1,col)
+      if self.can_step_on(row - 1, col)
         output.push(Irrgarten::Directions::UP)
       end
-      if self.can_step_on(row,col+1)
+      if self.can_step_on(row, col + 1)
         output.push(Irrgarten::Directions::RIGHT)
       end
-      if self.can_step_on(row, col-1)
+      if self.can_step_on(row, col - 1)
         output.push(Irrgarten::Directions::LEFT)
       end
 
       output
     end
+
     private def pos_ok(row, col)
-      row>=@@ROW && row<@n_rows && col<@n_cols && col>=@@COL
+      row >= 0 && row < @n_rows && col < @n_cols && col >= 0
     end
 
     private def empty_pos(row, col)
@@ -129,40 +136,42 @@ module Irrgarten
     end
 
     private def can_step_on(row, col)
-      self.pos_ok(row,col) && (self.empty_pos(row,col) || self.monster_pos(row,col) || self.exit_pos(row,col))
+      self.pos_ok(row, col) && (self.empty_pos(row, col) || self.monster_pos(row, col) || self.exit_pos(row, col))
     end
 
     private def update_old_pos(row, col)
-      if self.pos_ok(row,col)
-        @labyrinth[row][col] = @@COMBAT_CHAR
-      else
-        @labyrinth[row][col] = @@EMPTY_CHAR
+      if self.pos_ok(row, col)
+        if self.combat_pos(row, col)
+          @labyrinth[row][col] = @@MONSTER_CHAR
+        else
+          @labyrinth[row][col] = @@EMPTY_CHAR
+        end
       end
     end
 
     private def dir_2_pos(row, col, direction)
       case direction
       when Irrgarten::Directions::UP
-        row-=1
+        row -= 1
       when Irrgarten::Directions::DOWN
-        row+=1
+        row += 1
       when Irrgarten::Directions::RIGHT
-        col+=1
+        col += 1
       when Irrgarten::Directions::LEFT
-        col-=1
+        col -= 1
       else
         exit(1)
       end
 
-      [row,col]
+      [row, col]
     end
 
     private def random_empty_pos
       begin
         row = Dice.random_pos(@n_rows)
         col = Dice.random_pos(@n_cols)
-      end while self.pos_ok(row,col) && self.empty_pos(row,col)
-      [row,col]
+      end while !(self.pos_ok(row, col) && self.empty_pos(row, col))
+      [row, col]
     end
 
     private def put_player_2d(old_row, old_col, row, col, player)
@@ -175,18 +184,18 @@ module Irrgarten
             @players[old_row][old_col] = nil
           end
         end
-      end
-      monster_pos = self.monster_pos(row,col)
-      if monster_pos
-        @labyrinth[row][col] = @@COMBAT_CHAR
-        output = @monsters[row][col]
-      else
-        number = player.number
-        @labyrinth[row][col] = number
-      end
-      @players[row][col] = player
-      player.set_pos(row,col)
 
+        monster_pos = self.monster_pos(row, col)
+        if monster_pos
+          @labyrinth[row][col] = @@COMBAT_CHAR
+          output = @monsters[row][col]
+        else
+          number = player.number.to_s
+          @labyrinth[row][col] = number
+        end
+        @players[row][col] = player
+        player.set_pos(row, col)
+      end
       output
     end
   end
