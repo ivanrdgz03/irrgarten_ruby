@@ -1,8 +1,6 @@
 require 'io/console'
-require_relative 'directions'
-
 module UI
-
+  require_relative '../Irrgarten/directions'
   class TextUI
 
     #https://gist.github.com/acook/4190379
@@ -25,22 +23,22 @@ module UI
     def next_move
       print "Where? "
       got_input = false
-      while (!got_input)
-        c = "a"#read_char
+      while !got_input
+        c = gets.chomp
         case c
-          when "\e[A"
+          when "w"
             puts "UP ARROW"
             output = Irrgarten::Directions::UP
             got_input = true
-          when "a"#"\e[B"
+          when "s"
             puts "DOWN ARROW"
             output = Irrgarten::Directions::DOWN
             got_input = true
-          when "\e[C"
+          when "d"
             puts "RIGHT ARROW"
             output = Irrgarten::Directions::RIGHT
             got_input = true
-          when "\e[D"
+          when "a"
             puts "LEFT ARROW"
             output = Irrgarten::Directions::LEFT
             got_input = true

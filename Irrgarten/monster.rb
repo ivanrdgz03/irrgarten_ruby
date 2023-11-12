@@ -1,3 +1,5 @@
+module Irrgarten
+require_relative 'dice'
 class Monster
   @@INITIAL_HEALTH = 5
 
@@ -41,4 +43,5 @@ class Monster
   private def got_wounded
     @health -= 1
   end
+end
 end

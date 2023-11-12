@@ -1,7 +1,7 @@
-require_relative 'shield'
-require_relative 'weapon'
-require_relative 'dice'
-require_relative 'game_state'
+require_relative 'Irrgarten/en/shield'
+require_relative 'Irrgarten/weapon'
+require_relative 'Irrgarten/dice'
+require_relative 'Irrgarten/game_state'
 class Test1
   def self.probar
     weapon = Weapon.new(Dice.weapon_power,Dice.uses_left)
