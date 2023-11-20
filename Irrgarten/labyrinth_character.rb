@@ -3,7 +3,7 @@ class Labyrinth_character
   public attr_reader :row, :col
   protected attr_reader :intelligence, :strength, :health
   protected attr_writer :health
-  def initialize(name, intelligence, strength, health)
+  public def initialize(name, intelligence, strength, health)
     @name = name
     @intelligence = intelligence
     @strength = strength
@@ -12,7 +12,10 @@ class Labyrinth_character
     @col
   end
   def copy(other)
-    self.initialize(other.name, other.intelligence other.strength, other.health)
+    @name = other.name
+    @intelligence = other.intelligence
+    @strength = other.strength
+    @health = other.health
     @row = other.row
     @col = other.col
   end
@@ -24,7 +27,7 @@ class Labyrinth_character
     @col = col
   end
   public def to_s
-
+    "[#{@name}, #{@intelligence}, #{@strength}, #{@health}, #{@row}, #{@col}]"
   end
   protected def got_wounded
     @health -= 1

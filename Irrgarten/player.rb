@@ -1,7 +1,6 @@
 module Irrgarten
-  require_relative 'dice'
-  require_relative 'weapon'
-  require_relative 'shield'
+  require_relative 'labyrinth_character'
+
 
   class Player < Labyrinth_character
     @@MAX_WEAPONS = 2
@@ -9,8 +8,9 @@ module Irrgarten
     @@INITIAL_HEALTH = 10
     @@HITS2LOSE = 3
 
-    def initialize(number, intelligence, strength)
-      super("Player #"+number, intelligence,strength,@@INITIAL_HEALTH)
+    public def initialize(number, intelligence, strength)
+      super("Player ##{number}", intelligence,strength,@@INITIAL_HEALTH)
+      @number = number
       @consecutive_hits = 0
       @weapons = Array.new
       @shields = Array.new
@@ -76,7 +76,7 @@ module Irrgarten
       @shields.each do |shield|
         shields_string += " " + shield.to_s
       end
-      "P[#{self.name}, #{self.intelligence}, #{self.strength}, #{self.health}, #{self.row}, #{self.col}, #{@consecutive_hits}, #{weapons_string}, #{shields_string}]"
+      "P[ Player##{@number}, #{self.intelligence}, #{self.strength}, #{self.health}, #{self.row}, #{self.col}, #{@consecutive_hits}, #{weapons_string}, #{shields_string}]"
     end
 
     private def receive_weapon(w)

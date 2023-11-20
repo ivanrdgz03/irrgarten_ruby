@@ -23,7 +23,7 @@ class Monster < Labyrinth_character
   end
 
   def to_s
-    "M[##{self.name}, #{self.intelligence}, #{self.stregth}, #{self.health}, #{self.row}, #{self.col}]"
+    "M"+ super.to_s
   end
 end
 end
