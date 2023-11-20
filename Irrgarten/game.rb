@@ -1,12 +1,4 @@
 module Irrgarten
-  require_relative 'player'
-  require_relative 'dice'
-  require_relative 'labyrinth'
-  require_relative 'game_state'
-  require_relative 'monster'
-  require_relative 'game_character'
-  require_relative 'directions'
-  require_relative 'orientation'
   class Game
     @@MAX_ROUNDS = 10
 

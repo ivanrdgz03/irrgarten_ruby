@@ -70,5 +70,12 @@ module Irrgarten
 
       @generator.rand < prob
     end
+    def self.next_step(preference, valid_moves, intelligence)
+      if Dice.random_intelligence < intelligence
+        preference
+      else
+        valid_moves[@generator.nextInt(valid_moves.length)]
+      end
+    end
   end
 end

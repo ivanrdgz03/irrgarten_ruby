@@ -1,26 +1,12 @@
 module Irrgarten
   require_relative 'dice'
-  class Shield
-    def initialize(protection, uses)
-      @protection = protection
-      @uses = uses
-    end
-
+  class Shield < Combat_element
     def protect
-      aux = 0.0
-      if @uses > 0
-        @uses-=1
-        aux = @protection
-      end
-      aux
+      self.produce_effect
     end
 
     def to_s
-      "S[#{@protection},#{@uses}]"
-    end
-
-    def discard
-      Dice.discard_element(@uses)
+      "S" + super
     end
   end
 end

@@ -2,43 +2,32 @@ module Irrgarten
   require_relative 'dice'
   require_relative 'weapon'
   require_relative 'shield'
-  # noinspection RubyTooManyInstanceVariablesInspection
-  class Player
+
+  class Player < Labyrinth_character
     @@MAX_WEAPONS = 2
     @@MAX_SHIELDS = 3
     @@INITIAL_HEALTH = 10
     @@HITS2LOSE = 3
 
     def initialize(number, intelligence, strength)
-      @name = "Player ##{number}"
-      @number = number
-      @intelligence = intelligence
-      @strength = strength
-      @health = @@INITIAL_HEALTH
+      super("Player #"+number, intelligence,strength,@@INITIAL_HEALTH)
       @consecutive_hits = 0
       @weapons = Array.new
       @shields = Array.new
-      @row
-      @col
+    end
+
+    def copy(other)
+      super
     end
 
     def resurrect
-      @health = @@INITIAL_HEALTH
+      self.health = @@INITIAL_HEALTH
       self.reset_hits
       @weapons.clear
       @shields.clear
     end
 
-    attr_reader :row, :col, :number
-
-    def set_pos(row, col)
-      @row = row
-      @col = col
-    end
-
-    def dead
-      @health <= 0
-    end
+    attr_reader :number
 
     def move(direction, valid_moves)
       size = valid_moves.size
@@ -53,7 +42,7 @@ module Irrgarten
     end
 
     def attack
-      @strength + self.sum_weapons
+      self.strength + self.sum_weapons
     end
 
     def defend(received_attack)
@@ -75,7 +64,7 @@ module Irrgarten
       end
       extra_health = Dice.health_reward
       puts(extra_health)
-      @health += extra_health
+      self.health += extra_health
     end
 
     def to_s
@@ -87,7 +76,7 @@ module Irrgarten
       @shields.each do |shield|
         shields_string += " " + shield.to_s
       end
-      "P[#{@name}, #{@intelligence}, #{@strength}, #{@health}, #{@row}, #{@col}, #{@consecutive_hits}, #{weapons_string}, #{shields_string}]"
+      "P[#{self.name}, #{self.intelligence}, #{self.strength}, #{self.health}, #{self.row}, #{self.col}, #{@consecutive_hits}, #{weapons_string}, #{shields_string}]"
     end
 
     private def receive_weapon(w)
@@ -128,7 +117,7 @@ module Irrgarten
       shield = Shield.new(Dice.shield_power, Dice.uses_left)
     end
 
-    private def sum_weapons
+    protected def sum_weapons
       suma = 0.0
       @weapons.each do |weapon|
         suma += weapon.attack
@@ -136,7 +125,7 @@ module Irrgarten
       suma
     end
 
-    private def sum_shields
+    protected def sum_shields
       suma = 0.0
       @shields.each do |shield|
         suma += shield.protect
@@ -144,8 +133,8 @@ module Irrgarten
       suma
     end
 
-    private def defensive_energy
-      @intelligence + self.sum_shields
+    protected def defensive_energy
+      self.intelligence + self.sum_shields
     end
 
     private def manage_hit(received_attack)
@@ -169,11 +158,6 @@ module Irrgarten
     private def reset_hits
       @consecutive_hits = 0
     end
-
-    private def got_wounded
-      @health -= 1
-    end
-
     private def inc_consecutive_hits
       @consecutive_hits -= 1
     end

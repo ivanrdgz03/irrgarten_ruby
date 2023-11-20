@@ -1,23 +1,13 @@
 module Irrgarten
 require_relative 'dice'
-class Monster
+class Monster < Labyrinth_character
   @@INITIAL_HEALTH = 5
 
   def initialize(name, intelligence, strength)
-    @name = name
-    @intelligence = intelligence
-    @stregth = strength
-    @health = @@INITIAL_HEALTH
-    @row
-    @col
+    super(name, intelligence, strength, @@INITIAL_HEALTH)
   end
-
-  def dead
-    @health <= 0
-  end
-
   def attack
-    Dice.intensity(@stregth)
+    Dice.intensity(self.stregth)
   end
 
   def defend(received_attack)
@@ -32,16 +22,8 @@ class Monster
     is_dead
   end
 
-  def set_pos(row, col)
-    @row = row
-    @col = col
-  end
-
   def to_s
-    "M[##{@name}, #{@intelligence}, #{@stregth}, #{@health}, #{@row}, #{@col}]"
-  end
-  private def got_wounded
-    @health -= 1
+    "M[##{self.name}, #{self.intelligence}, #{self.stregth}, #{self.health}, #{self.row}, #{self.col}]"
   end
 end
 end
