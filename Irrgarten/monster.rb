@@ -7,7 +7,7 @@ class Monster < Labyrinth_character
     super(name, intelligence, strength, @@INITIAL_HEALTH)
   end
   def attack
-    Dice.intensity(self.stregth)
+    Dice.intensity(self.strength)
   end
 
   def defend(received_attack)

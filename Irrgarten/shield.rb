@@ -1,5 +1,6 @@
 module Irrgarten
   require_relative 'dice'
+  require_relative 'combat_element'
   class Shield < Combat_element
     def protect
       self.produce_effect

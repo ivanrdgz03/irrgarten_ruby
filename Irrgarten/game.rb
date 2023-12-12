@@ -5,6 +5,8 @@ module Irrgarten
   require_relative 'labyrinth'
   require_relative 'orientation'
   require_relative 'game_state'
+  require_relative 'game_character'
+  require_relative 'fuzzy_player'
   class Game
     @@MAX_ROUNDS = 10
 
@@ -37,6 +39,7 @@ module Irrgarten
     end
 
     def next_step(preferred_direction)
+      @log = ""
       dead = @current_player.dead
       if !dead
         direction = self.actual_direction(preferred_direction)
@@ -76,7 +79,7 @@ module Irrgarten
     private def configure_labyrinth
       row = 2
       col = 1
-      monster = Monster.new("1",1, Dice.random_strength)
+      monster = Monster.new("1",10, Dice.random_strength)
       @monsters.push(monster)
       @monsters.push(monster)
       @labyrinth.add_monster(row,col-1, monster)
@@ -135,6 +138,10 @@ module Irrgarten
       resurrect = Dice.resurrect_player
       if resurrect
         @current_player.resurrect
+        fuzzy = Fuzzy_player.new(@current_player)
+        @labyrinth.set_fuzzy_player(fuzzy,@current_player)
+        @players[@current_player_index] = fuzzy
+        @current_player = @players[@current_player_index]
         self.log_resurrected
       else
         self.log_player_skip_turn

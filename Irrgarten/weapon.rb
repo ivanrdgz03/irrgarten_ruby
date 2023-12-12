@@ -1,11 +1,12 @@
 module Irrgarten
   require_relative 'dice'
+  require_relative 'combat_element'
   class Weapon < Combat_element
     def initialize(effect, uses)
       super
     end
     def attack
-      self.produce_effect
+      return self.produce_effect
     end
 
     def to_s

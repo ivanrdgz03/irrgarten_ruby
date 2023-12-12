@@ -12,7 +12,7 @@ class Labyrinth_character
     @col
   end
   def copy(other)
-    @name = other.name
+    @name = other.instance_variable_get(:@name)
     @intelligence = other.intelligence
     @strength = other.strength
     @health = other.health

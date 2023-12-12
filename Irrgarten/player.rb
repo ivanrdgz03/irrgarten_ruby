@@ -1,5 +1,8 @@
 module Irrgarten
   require_relative 'labyrinth_character'
+  require_relative 'shield'
+  require_relative 'weapon'
+  require_relative 'Dice'
 
 
   class Player < Labyrinth_character
@@ -18,6 +21,10 @@ module Irrgarten
 
     def copy(other)
       super
+      @number = other.number
+      @consecutive_hits = 0
+      @weapons = Array.new
+      @shields = Array.new
     end
 
     def resurrect

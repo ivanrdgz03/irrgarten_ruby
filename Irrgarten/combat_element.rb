@@ -1,3 +1,4 @@
+module Irrgarten
 class Combat_element
   def initialize(effect, uses)
     @effect = effect
@@ -6,8 +7,8 @@ class Combat_element
   protected def produce_effect
     aux = 0.0
     if @uses > 0
-      --@uses
-      aux = @power
+      @uses -=1
+      aux = @effect
     end
     aux
   end
@@ -17,4 +18,5 @@ class Combat_element
   public def to_s
     "[#{@power},#{@uses}]"
   end
+end
 end

@@ -38,7 +38,9 @@ module Irrgarten
         self.put_player_2d(old_row, old_col, pos[0], pos[1], p)
       end
     end
-
+    def set_fuzzy_player(fuzzy, player)
+      @players[player.row][player.col] = fuzzy
+    end
     def have_a_winner
       salida = false
 
