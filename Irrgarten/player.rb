@@ -2,13 +2,13 @@ module Irrgarten
   require_relative 'labyrinth_character'
   require_relative 'shield'
   require_relative 'weapon'
-  require_relative 'Dice'
+  require_relative 'dice'
 
 
   class Player < Labyrinth_character
     @@MAX_WEAPONS = 2
     @@MAX_SHIELDS = 3
-    @@INITIAL_HEALTH = 10
+    @@INITIAL_HEALTH = 1
     @@HITS2LOSE = 3
 
     public def initialize(number, intelligence, strength)
