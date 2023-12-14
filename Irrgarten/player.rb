@@ -8,7 +8,7 @@ module Irrgarten
   class Player < Labyrinth_character
     @@MAX_WEAPONS = 2
     @@MAX_SHIELDS = 3
-    @@INITIAL_HEALTH = 1
+    @@INITIAL_HEALTH = 10
     @@HITS2LOSE = 3
 
     public def initialize(number, intelligence, strength)

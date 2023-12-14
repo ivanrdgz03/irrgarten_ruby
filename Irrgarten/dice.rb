@@ -71,7 +71,6 @@ module Irrgarten
       @generator.rand < prob
     end
     def self.next_step(preference, valid_moves, intelligence)
-      puts("Este mensaje es del next_step")
       if valid_moves.include?(preference) and Dice.random_intelligence < intelligence
         return preference
       else
